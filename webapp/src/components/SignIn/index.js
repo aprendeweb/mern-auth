@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
-import { Row, Input, Button, Form, Divider } from 'antd';
+import { Row, Input, Button, Form, Divider, Spin } from 'antd';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
+import { userActions } from '../../store/actions';
 import { reduxForm, Field } from 'redux-form';
+
 class SignIn extends Component {
   renderTextField({ input, label }) {
     return (
@@ -21,15 +23,16 @@ class SignIn extends Component {
   }
 
   submitForm(formValues) {
-    console.log(formValues);
+    this.props.signInRequest(formValues);
   }
 
   render() {
+    const { user } = this.props;
     return (
       <div>
         <Divider orientation="center">Sign In form</Divider>
         <Row justify="center" style={{ padding: '5%' }}>
-          <form onSubmit={this.props.handleSubmit(this.submitForm)}>
+          <form onSubmit={this.props.handleSubmit(this.submitForm.bind(this))}>
             <Field
               name="username"
               label="Username"
@@ -41,10 +44,15 @@ class SignIn extends Component {
               component={this.renderTextPasswordField}
             />
             <Form.Item>
-              <Button htmlType="submit" type="primary">
-                Sing In
-              </Button>
+              {user && user.inPromise ? (
+                <Spin spinning={user.inPromise || false} />
+              ) : (
+                <Button htmlType="submit" type="primary">
+                  Sing In
+                </Button>
+              )}
             </Form.Item>
+
             <Link to="/signup">Create an account</Link>
           </form>
         </Row>
@@ -59,4 +67,13 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default connect(mapStateToProps)(reduxForm({ form: 'signIn' })(SignIn));
+const mapDispatchToProps = (dispatch) => {
+  return {
+    signInRequest: (user) => dispatch(userActions.signInRequest(user)),
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(reduxForm({ form: 'signIn' })(SignIn));

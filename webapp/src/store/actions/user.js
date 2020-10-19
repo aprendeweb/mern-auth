@@ -30,4 +30,4 @@ actions.signInSuccess = (user) => {
   };
 };
 
-export const actions;
+export { actions };
