@@ -1,4 +1,9 @@
-import { SIGNIN_REQUEST, SIGNUP_REQUEST } from '../actions/types';
+import {
+  SIGNIN_REQUEST,
+  SIGNUP_REQUEST,
+  SIGNIN_SUCCESS,
+  SIGNUP_SUCCESS,
+} from '../actions/types';
 
 export const userReducer = (state = { inPromise: false }, action) => {
   const { type, payload } = action;
@@ -6,6 +11,14 @@ export const userReducer = (state = { inPromise: false }, action) => {
     case SIGNIN_REQUEST:
     case SIGNUP_REQUEST:
       return { ...state, inPromise: true };
+
+    case SIGNIN_SUCCESS:
+      const { info: token } = payload;
+      return { ...state, token, inPromise: false };
+
+    case SIGNUP_SUCCESS:
+      const { msg } = payload;
+      return { ...state, inPromise: false, msg };
 
     default:
       return state;
