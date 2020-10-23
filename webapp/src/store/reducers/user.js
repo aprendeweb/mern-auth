@@ -13,8 +13,7 @@ export const userReducer = (state = { inPromise: false }, action) => {
       return { ...state, inPromise: true };
 
     case SIGNIN_SUCCESS:
-      const { info: token } = payload;
-      return { ...state, token, inPromise: false };
+      return { ...state, ...payload, inPromise: false };
 
     case SIGNUP_SUCCESS:
       const { msg } = payload;

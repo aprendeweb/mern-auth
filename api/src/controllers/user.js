@@ -23,8 +23,9 @@ module.exports = {
       password,
       encryptedPassword
     );
+    const userToToken = { _id: userFound._id, username: userFound.username };
     if (!passwordIsCorrect) return res.json({ msg: 'Incorrect password' });
-    const token = jwt.sign(JSON.stringify(userFound), jwtSecret);
+    const token = jwt.sign(JSON.stringify(userToToken), jwtSecret);
     res.send({ info: token });
   },
 };

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Row, Form, Input, Button, Divider, Spin } from 'antd';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { userActions } from '../../store/actions';
 import { reduxForm, Field } from 'redux-form';
@@ -27,6 +27,8 @@ class SignUp extends Component {
   }
   render() {
     const { user } = this.props;
+    if (user._id) return <Redirect to="dashboard" />;
+
     return (
       <div>
         <Divider orientation="center">Sing Up form</Divider>
