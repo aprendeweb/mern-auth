@@ -30,4 +30,10 @@ actions.signInSuccess = (user) => {
   };
 };
 
+actions.logOut = () => {
+  return {
+    type: types.LOGOUT,
+  };
+};
+
 export { actions };

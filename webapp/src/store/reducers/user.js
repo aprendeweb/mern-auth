@@ -1,4 +1,5 @@
 import {
+  LOGOUT,
   SIGNIN_REQUEST,
   SIGNUP_REQUEST,
   SIGNIN_SUCCESS,
@@ -18,6 +19,9 @@ export const userReducer = (state = { inPromise: false }, action) => {
     case SIGNUP_SUCCESS:
       const { msg } = payload;
       return { ...state, inPromise: false, msg };
+
+    case LOGOUT:
+      return { inPromise: false, ...payload };
 
     default:
       return state;

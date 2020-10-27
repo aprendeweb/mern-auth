@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import './App.css';
-import { BrowserRouter, Switch, Route } from 'react-router-dom';
+import { Switch, Route } from 'react-router-dom';
 import PrivateRoute from './routers/PrivateRoutes';
 import SignIn from './components/SignIn';
 import SignUp from './components/SignUp';
@@ -17,20 +17,17 @@ function App({ signInSuccess }) {
   if (isAuthorized()) {
     const token = getToken();
     const user = decode(token);
-    console.log(user);
     signInSuccess(user);
   }
   return (
     <div>
       <Header />
       <Content>
-        <BrowserRouter>
-          <Switch>
-            <Route exact path="/signin" component={SignIn} />
-            <Route exact path="/signup" component={SignUp} />
-            <PrivateRoute exact path="/dashboard" component={Dashboard} />
-          </Switch>
-        </BrowserRouter>
+        <Switch>
+          <Route exact path="/signin" component={SignIn} />
+          <Route exact path="/signup" component={SignUp} />
+          <PrivateRoute exact path="/dashboard" component={Dashboard} />
+        </Switch>
       </Content>
     </div>
   );
